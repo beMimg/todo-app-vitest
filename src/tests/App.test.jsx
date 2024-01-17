@@ -1,7 +1,10 @@
 import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import App from "../App";
 
 describe("App Component", () => {
-  it("sums", () => {
-    expect(2 + 2).toBe(4);
+  it("renders form", () => {
+    const { container } = render(<App></App>);
+    expect(container).toMatchSnapshot();
   });
 });

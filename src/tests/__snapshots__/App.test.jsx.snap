@@ -1,0 +1,24 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`App Component > renders form 1`] = `
+<div>
+  <form>
+    <label
+      for="todo-name"
+    >
+      Todo name:
+    </label>
+    <input
+      id="todo-name"
+      name="todo-name"
+      type="text"
+      value=""
+    />
+    <button
+      type="submit"
+    >
+      Submit
+    </button>
+  </form>
+</div>
+`;

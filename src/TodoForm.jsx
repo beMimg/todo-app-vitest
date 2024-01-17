@@ -11,10 +11,12 @@ export function TodoForm({ onSubmit }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label>Todo name:</label>
+      <label htmlFor="todo-name">Todo name:</label>
       <input
         type="text"
         value={inputValue}
+        id="todo-name"
+        name="todo-name"
         onChange={(e) => setInputValue(e.target.value)}
       />
       <button type="submit">Submit</button>
