@@ -1,8 +1,21 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import { TodoForm } from "./TodoForm";
 
-function App() {}
+function App() {
+  const [todos, setTodos] = useState([]);
+
+  function handleTodoSubmit(todoName) {
+    setTodos((todos) => [
+      ...todos,
+      { name: todoName, id: crypto.randomUUID(), time: new Date() },
+    ]);
+  }
+
+  return (
+    <>
+      <TodoForm onSubmit={handleTodoSubmit}></TodoForm>
+    </>
+  );
+}
 
 export default App;
