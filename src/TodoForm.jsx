@@ -17,6 +17,7 @@ export function TodoForm({ onSubmit }) {
         value={inputValue}
         id="todo-name"
         name="todo-name"
+        data-testid="input-element"
         onChange={(e) => setInputValue(e.target.value)}
       />
       <button type="submit">Submit</button>

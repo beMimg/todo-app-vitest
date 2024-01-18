@@ -9,6 +9,7 @@ exports[`App Component > renders form 1`] = `
       Todo name:
     </label>
     <input
+      data-testid="input-element"
       id="todo-name"
       name="todo-name"
       type="text"

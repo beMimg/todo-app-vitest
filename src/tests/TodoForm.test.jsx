@@ -1,5 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import {
+  fireEvent,
+  getByLabelText,
+  getByTestId,
+  render,
+  screen,
+} from "@testing-library/react";
 import { TodoForm } from "../TodoForm";
 import userEvent from "@testing-library/user-event";
 
@@ -13,13 +19,21 @@ describe("TodoForm Jsx", () => {
   });
 
   it("input is empty when component mounts", () => {
-    const { getByLabelText } = render(
-      <TodoForm onSubmit={() => {}}></TodoForm>
-    );
+    render(<TodoForm onSubmit={() => {}}></TodoForm>);
 
-    const inputElement = getByLabelText("Todo name:");
+    const inputElement = screen.getByTestId("input-element");
 
     expect(inputElement.value).toBe("");
+  });
+
+  it("input change in todo form", async () => {
+    render(<TodoForm onSubmit={() => {}}></TodoForm>);
+
+    const inputElement = screen.getByTestId("input-element");
+
+    fireEvent.change(inputElement, { target: { value: "New Todo" } });
+
+    expect(inputElement.value).toBe("New Todo");
   });
 
   it("should call onSubmit function when clicked", async () => {
@@ -33,5 +47,23 @@ describe("TodoForm Jsx", () => {
     await user.click(button);
 
     expect(mockFn).toHaveBeenCalled();
+  });
+
+  it("should clear inputValue if form submitted", async () => {
+    const mockFn = vi.fn();
+    const user = userEvent.setup();
+
+    render(<TodoForm onSubmit={mockFn}></TodoForm>);
+
+    const button = screen.getByRole("button", { name: "Submit" });
+    const inputElement = screen.getByTestId("input-element");
+
+    fireEvent.change(inputElement, { target: { value: "New Todo" } });
+
+    await user.click(button);
+
+    expect(mockFn).toHaveBeenCalled();
+
+    expect(inputElement.value).toBe("");
   });
 });
