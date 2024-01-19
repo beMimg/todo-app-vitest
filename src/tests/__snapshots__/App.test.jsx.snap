@@ -1,5 +1,32 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`App Component > renders app 1`] = `
+<div>
+  <form>
+    <label
+      for="todo-name"
+    >
+      Todo name:
+    </label>
+    <input
+      data-testid="input-element"
+      id="todo-name"
+      name="todo-name"
+      type="text"
+      value=""
+    />
+    <button
+      type="submit"
+    >
+      Submit
+    </button>
+  </form>
+  <ul
+    data-testid="todos-list"
+  />
+</div>
+`;
+
 exports[`App Component > renders form 1`] = `
 <div>
   <form>
@@ -21,5 +48,8 @@ exports[`App Component > renders form 1`] = `
       Submit
     </button>
   </form>
+  <ul
+    data-testid="todos-list"
+  />
 </div>
 `;

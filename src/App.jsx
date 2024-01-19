@@ -14,6 +14,11 @@ function App() {
   return (
     <>
       <TodoForm onSubmit={handleTodoSubmit}></TodoForm>
+      <ul data-testid="todos-list">
+        {todos.map((todo) => (
+          <li key={todo.id}>{todo.name}</li>
+        ))}
+      </ul>
     </>
   );
 }
