@@ -37,6 +37,28 @@ describe("App Component", () => {
       expect(screen.queryByText("dsad")).toBeNull();
     });
   });
+
+  it("Display the two todos created", async () => {
+    const user = userEvent.setup();
+
+    render(<App></App>);
+
+    const button = screen.getByRole("button", { name: "Submit" });
+
+    const inputElement = screen.getByTestId("input-element");
+
+    fireEvent.change(inputElement, { target: { value: "New Todo" } });
+    await user.click(button);
+
+    fireEvent.change(inputElement, { target: { value: "newww" } });
+    user.click(button);
+
+    await screen.findByText("New Todo");
+    await screen.findByText("newww");
+    await waitFor(() => {
+      expect(screen.queryByText("dsad")).toBeNull();
+    });
+  });
 });
 
 describe("App Component, handleDelete", () => {
@@ -71,6 +93,29 @@ describe("App Component, handleDelete", () => {
 
     await waitFor(() => {
       expect(screen.queryByText("Delete")).toBeNull();
+    });
+  });
+
+  it("click delete, deletes the right todo", async () => {
+    const user = userEvent.setup();
+
+    const button = screen.getByRole("button", { name: "Submit" });
+
+    const inputElement = screen.getByTestId("input-element");
+
+    fireEvent.change(inputElement, { target: { value: "2nd Todo" } });
+    await user.click(button);
+
+    fireEvent.change(inputElement, { target: { value: "3rd Todo" } });
+    user.click(button);
+
+    const deleteBtnTarget = screen.getByTestId("2nd Todo");
+
+    await user.click(deleteBtnTarget);
+
+    await waitFor(() => {
+      expect(screen.queryByText("2nd Todo")).toBeNull();
+      expect(screen.queryByText("3rd todo")).toBeDefined();
     });
   });
 });
