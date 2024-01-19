@@ -11,12 +11,20 @@ function App() {
     ]);
   }
 
+  function handleDelete(id) {
+    const filtredArray = todos.filter((todo) => todo.id !== id);
+    setTodos(filtredArray);
+  }
+
   return (
     <>
       <TodoForm onSubmit={handleTodoSubmit}></TodoForm>
       <ul data-testid="todos-list">
         {todos.map((todo) => (
-          <li key={todo.id}>{todo.name}</li>
+          <li key={todo.id}>
+            {todo.name}
+            <button onClick={(e) => handleDelete(todo.id)}>Delete</button>
+          </li>
         ))}
       </ul>
     </>
