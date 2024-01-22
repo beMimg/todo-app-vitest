@@ -7,9 +7,8 @@ import {
   screen,
   waitFor,
 } from "@testing-library/react";
-import App from "../App";
+import App from "../components/App";
 import userEvent from "@testing-library/user-event";
-import { TodoForm } from "../TodoForm";
 
 describe("App Component", () => {
   it("renders app", () => {

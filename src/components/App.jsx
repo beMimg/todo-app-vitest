@@ -2,10 +2,12 @@ import { useState } from "react";
 import { TodoForm } from "./TodoForm";
 import { EditForm } from "./EditForm";
 import { TodoDisplay } from "./TodoDisplay";
+import { TestsModal } from "./TestsModal";
 
 function App() {
   const [todos, setTodos] = useState([]);
   const [editTodoName, setEditTodoName] = useState();
+  const [displayModal, setDisplayModal] = useState(false);
 
   function handleTodoSubmit(todoName) {
     setTodos((todos) => [
@@ -67,32 +69,44 @@ function App() {
     setEditTodoName("");
   }
 
+  function handleCloseModal() {
+    setDisplayModal(false);
+  }
   const isThereAnActiveEdit = todos.some((todo) => todo.isBeingEdited);
 
   return (
     <>
+      <button
+        className="tests-btn"
+        onClick={() => {
+          setDisplayModal(true);
+        }}
+      >
+        Tests
+      </button>
+      {displayModal && <TestsModal onClose={handleCloseModal}></TestsModal>}
       <TodoForm onSubmit={handleTodoSubmit}></TodoForm>
       <div data-testid="todos-list" className="todos-list">
-        {todos.map((todo) => (
-          <div key={todo.id}>
-            {todo.isBeingEdited ? (
-              <EditForm
-                onSubmit={changeTodoName}
-                onChange={setEditTodoName}
-                onClick={cancelEdit}
-                todo={todo}
-                editTodoName={editTodoName}
-              ></EditForm>
-            ) : (
-              <TodoDisplay
-                todo={todo}
-                onDelete={handleDelete}
-                onEdit={turnEditOn}
-                isAvailable={isThereAnActiveEdit}
-              ></TodoDisplay>
-            )}
-          </div>
-        ))}
+        {todos.map((todo) =>
+          todo.isBeingEdited ? (
+            <EditForm
+              onSubmit={changeTodoName}
+              onChange={setEditTodoName}
+              onClick={cancelEdit}
+              todo={todo}
+              editTodoName={editTodoName}
+              key={todo.id}
+            ></EditForm>
+          ) : (
+            <TodoDisplay
+              todo={todo}
+              onDelete={handleDelete}
+              onEdit={turnEditOn}
+              isAvailable={isThereAnActiveEdit}
+              key={todo.id}
+            ></TodoDisplay>
+          )
+        )}
       </div>
     </>
   );

@@ -2,6 +2,11 @@
 
 exports[`App Component > renders app 1`] = `
 <div>
+  <button
+    class="tests"
+  >
+    Tests
+  </button>
   <form>
     <label
       for="todo-name"

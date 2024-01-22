@@ -1,6 +1,6 @@
 export function EditForm({ todo, editTodoName, onSubmit, onChange, onClick }) {
   return (
-    <form onSubmit={(e) => onSubmit(e, todo.id)}>
+    <form className="edit-form" onSubmit={(e) => onSubmit(e, todo.id)}>
       <input
         type="text"
         placeholder={todo.name}
@@ -8,8 +8,14 @@ export function EditForm({ todo, editTodoName, onSubmit, onChange, onClick }) {
         onChange={(e) => onChange(e.target.value)}
         data-testid="edit-input"
       />
-      <button type="submit">Resubmit</button>
-      <button type="button" onClick={() => onClick(todo.id)}>
+      <button className="resubmit-btn" type="submit">
+        Resubmit
+      </button>
+      <button
+        className="cancel-btn"
+        type="button"
+        onClick={() => onClick(todo.id)}
+      >
         Cancel
       </button>
     </form>

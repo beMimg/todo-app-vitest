@@ -10,7 +10,7 @@ export function TodoForm({ onSubmit }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="todo-form" onSubmit={handleSubmit}>
       <label htmlFor="todo-name">Todo name:</label>
       <input
         type="text"

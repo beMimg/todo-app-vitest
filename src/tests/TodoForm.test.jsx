@@ -1,12 +1,6 @@
 import { describe, it, expect } from "vitest";
-import {
-  fireEvent,
-  getByLabelText,
-  getByTestId,
-  render,
-  screen,
-} from "@testing-library/react";
-import { TodoForm } from "../TodoForm";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { TodoForm } from "../components/TodoForm.jsx";
 import userEvent from "@testing-library/user-event";
 
 describe("TodoForm Jsx", () => {
