@@ -3,11 +3,13 @@
 exports[`App Component > renders app 1`] = `
 <div>
   <button
-    class="tests"
+    class="tests-btn"
   >
     Tests
   </button>
-  <form>
+  <form
+    class="todo-form"
+  >
     <label
       for="todo-name"
     >
