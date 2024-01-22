@@ -168,4 +168,49 @@ describe("App Component, Edit", () => {
     await screen.findByRole("button", { name: "Resubmit" });
     await screen.findByRole("button", { name: "Cancel" });
   });
+
+  it("changing the edit input and resubmit displays the new todo name", async () => {
+    const user = userEvent.setup();
+
+    const editBtn = await screen.findByTestId("edit-New Todo");
+
+    await user.click(editBtn);
+
+    const editInput = await screen.findByTestId("edit-input");
+
+    fireEvent.change(editInput, { target: { value: "changed todo" } });
+
+    const resubmitBtn = await screen.findByText("Resubmit");
+
+    await user.click(resubmitBtn);
+
+    expect(screen.getByText("changed todo")).toBeDefined();
+    expect(screen.queryByText("New Todo")).toBeNull();
+    expect(screen.queryByTestId("edit-input")).toBeNull();
+    expect(screen.queryByText("Resubmit")).toBeNull();
+    expect(screen.queryByText("Cancel")).toBeNull();
+  });
+
+  it("changing edit input and click cancel should display the old todo. And click on edit again, edit input must be empty", async () => {
+    const user = userEvent.setup();
+
+    const editBtn = await screen.findByTestId("edit-New Todo");
+
+    await user.click(editBtn);
+
+    const editInput = await screen.findByTestId("edit-input");
+
+    fireEvent.change(editInput, { target: { value: "changed todo" } });
+
+    const cancelBtn = await screen.findByText("Cancel");
+
+    await user.click(cancelBtn);
+
+    expect(screen.getByText("New Todo")).toBeDefined();
+    expect(screen.queryByText("changed todo")).toBeNull();
+
+    await user.click(editBtn);
+
+    expect(editBtn).toHaveValue("");
+  });
 });
