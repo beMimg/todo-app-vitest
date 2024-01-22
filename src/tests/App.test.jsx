@@ -61,7 +61,7 @@ describe("App Component", () => {
   });
 });
 
-describe("App Component, handleDelete", () => {
+describe("App Component, Delete", () => {
   beforeEach(() => {
     const user = userEvent.setup();
 
@@ -117,5 +117,55 @@ describe("App Component, handleDelete", () => {
       expect(screen.queryByText("2nd Todo")).toBeNull();
       expect(screen.queryByText("3rd todo")).toBeDefined();
     });
+  });
+});
+
+describe("App Component, Edit", () => {
+  beforeEach(async () => {
+    const user = userEvent.setup();
+
+    render(<App></App>);
+
+    const button = screen.getByRole("button", { name: "Submit" });
+
+    const inputElement = screen.getByTestId("input-element");
+
+    fireEvent.change(inputElement, { target: { value: "New Todo" } });
+
+    await user.click(button);
+
+    fireEvent.change(inputElement, { target: { value: "2nd Todo" } });
+
+    await user.click(button);
+  });
+
+  it("displays two edit buttons", async () => {
+    const editBtns = await screen.findAllByText("Edit");
+
+    expect(editBtns).toHaveLength(2);
+  });
+
+  it("click on edit btn should remove all edit btns", async () => {
+    const user = userEvent.setup();
+
+    const editBtn = await screen.findByTestId("edit-New Todo");
+
+    await user.click(editBtn);
+
+    await waitFor(() => {
+      expect(screen.queryByText("Edit")).toBeNull();
+    });
+  });
+
+  it("click on edit btn should display input field, submit and cancel button", async () => {
+    const user = userEvent.setup();
+
+    const editBtn = await screen.findByTestId("edit-New Todo");
+
+    await user.click(editBtn);
+
+    await screen.findByTestId("edit-input");
+    await screen.findByRole("button", { name: "Resubmit" });
+    await screen.findByRole("button", { name: "Cancel" });
   });
 });

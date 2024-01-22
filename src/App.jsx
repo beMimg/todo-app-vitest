@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { TodoForm } from "./TodoForm";
+import { EditForm } from "./EditForm";
+import { TodoDisplay } from "./TodoDisplay";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -65,40 +67,33 @@ function App() {
     setEditTodoName("");
   }
 
+  const isThereAnActiveEdit = todos.some((todo) => todo.isBeingEdited);
+
   return (
     <>
       <TodoForm onSubmit={handleTodoSubmit}></TodoForm>
-      <ul data-testid="todos-list">
+      <div data-testid="todos-list" className="todos-list">
         {todos.map((todo) => (
           <div key={todo.id}>
             {todo.isBeingEdited ? (
-              <form onSubmit={(e) => changeTodoName(e, todo.id)}>
-                <input
-                  type="text"
-                  placeholder={todo.name}
-                  value={editTodoName}
-                  onChange={(e) => setEditTodoName(e.target.value)}
-                />
-                <button type="submit">Resubmit</button>
-                <button type="button" onClick={() => cancelEdit(todo.id)}>
-                  Cancel
-                </button>
-              </form>
+              <EditForm
+                onSubmit={changeTodoName}
+                onChange={setEditTodoName}
+                onClick={cancelEdit}
+                todo={todo}
+                editTodoName={editTodoName}
+              ></EditForm>
             ) : (
-              <>
-                <li key={todo.id}>{todo.name}</li>
-                <button
-                  onClick={() => handleDelete(todo.id)}
-                  data-testid={todo.name}
-                >
-                  Delete
-                </button>
-                <button onClick={() => turnEditOn(todo.id)}>Edit</button>
-              </>
+              <TodoDisplay
+                todo={todo}
+                onDelete={handleDelete}
+                onEdit={turnEditOn}
+                isAvailable={isThereAnActiveEdit}
+              ></TodoDisplay>
             )}
           </div>
         ))}
-      </ul>
+      </div>
     </>
   );
 }
